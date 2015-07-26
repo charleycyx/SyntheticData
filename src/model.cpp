@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "MersenneTwister.h"
 //#include "SpecialFunctions.h"
+#include <Rcpp.h>
+
+
+using namespace Rcpp;
 using namespace std;
 
 //SpecialFunctions sf;
@@ -559,7 +563,7 @@ void CalculateRiskSummary(double *data, int n, double *riskmeasure, double *resu
 	result[n+1] = runq;
 
 }
-void Run(string infile, int n, unsigned int seed, int niters, int burnin, int stride, string outfile, 
+void Run(string infile, int n, unsigned int seed, int niters, int burnin, int stride, string outfile,
 		 string syndatafile, string riskfile, int m, bool verbose, int in_upper) {
 	
 	int i,j;
@@ -708,6 +712,8 @@ void Run(string infile, int n, unsigned int seed, int niters, int burnin, int st
 
 // START OF MIGRATED FUNCTIONS
 //Functions are migrated since it's troublesome to add dependency
+//and it's easier to just copy paste when the object has only
+//one function used
 
 double gammarand(double a, double b, MTRand& mt)
 {
@@ -762,3 +768,103 @@ double gammarand(double a, double b, MTRand& mt)
     return -1.0;
 }
 
+//START OF CONVERSION HELPERS FOR EXPORTING FUNCTIONS
+//conversion helper get numeric vector from array and the reverse also
+
+NumericVector vectorFromArray(double *arr, int length) {
+    NumericVector v = NumericVector(length);
+    for (int i = 0; i<length; i++) {
+        v[i] = arr[i];
+    }
+    return v;
+}
+
+double *arrayFromVector(NumericVector v) {
+    
+    int n = v.size();
+    double *arr = new double[n];
+    for (int i = 0; i<n; i++) {
+        arr[i] = v[i];
+    }
+    return arr;
+}
+
+List listFromArray(double *arr, int ncol, int length) {
+    
+    List lst;
+    
+    NumericVector *v = new NumericVector[ncol];
+    int n = length/ncol;
+    for (int j = 0; j<ncol; j++) {
+      NumericVector v = NumericVector(n);
+      for (int i = 0; i < n; i++) {
+          v[i] = arr[i*ncol+j];
+        }
+      lst.push_back(v);
+    }
+    
+    return lst;
+}
+
+
+//START OF EXPORTING FUNCTIONS
+//EXPORTING FUNCTION links to Rcpp to provide R interface for all
+//the C++ functions here
+
+
+// [[Rcpp::export]]
+List getSynData(NumericVector vdata, int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int in_upper) {
+    
+    int i,j;
+    int ncol = 3;
+    int betaAcc,gammaAcc,L,npara;
+    
+    // random number intiliization
+    MTRand mt;
+    if (seed > 0) {
+        mt.seed(seed);
+    } else {
+        mt.seed((unsigned)time( NULL ));
+    }
+    
+    double *data = arrayFromVector(vdata);
+    
+    //yobs
+    double *yobs = new double[n];
+    for (i = 0; i < n; i++) {
+        yobs[i] = data[i*ncol+2]; // y is in column 2
+    }
+    
+    // model fitting
+    int B,G;
+    double *new_data = new double[n*(ncol+2)];
+    double *models = DoModel(data,new_data, n, niters, burnin, stride, betaAcc, gammaAcc, L,B,G,mt,in_upper);
+    
+    npara = B + G + 4;
+    
+    //calculate Lambdas from saved mcmc interations and sample synthetic data from all Lambdas
+    double * Lambdas = new double[L * n];
+    double *syndata = new double[L*n];
+    for (i =0; i < L; i++) {
+        double *MODEL = models + i*npara;
+        double *BETA = MODEL + 4;
+        double *GAMMA = BETA + B;
+        CalculateLambda(new_data, BETA, GAMMA, Lambdas + i * n, n);
+        SampleLambdas(Lambdas + i * n, syndata + i * n , n, 1, in_upper, mt);
+    }
+    
+    return listFromArray(syndata,m,n*m);
+    
+}
+
+
+//
+//// [[Rcpp::export]]
+//List getCI(int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int upperLimit) {
+//    
+//}
+//
+//// [[Rcpp::export]]
+//List getRiskSummary(int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int upperLimit){
+//    
+//}

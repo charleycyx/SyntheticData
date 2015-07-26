@@ -1,0 +1,16 @@
+getSyntheticData <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE, upperLimit=9) {
+  vdata <- numeric()
+  for (i in df) {
+    vdata <- c(vdata,i)
+  }
+  n <- length(df[[1]])
+  odf <- data.frame(cbind(df,getSynData(vdata, n, seed, niters, burnin, stride, numModel, verbose, upperLimit-1)))
+  
+  synNames <- character(numModel)
+  for (i in 1:numModel) {
+    synNames[i] <- paste("syntheticData",as.character(i),sep="")
+  }
+  
+  names(odf) <- c("source", "destination", "y", synNames)
+  odf
+}
