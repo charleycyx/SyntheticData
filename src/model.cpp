@@ -580,7 +580,7 @@ void Run(string infile, int n, unsigned int seed, int niters, int burnin, int st
 
 	//read data 
 	double *data = ReadData(n, ncol, infile, verbose);
-	
+    
 	//yobs
 	double *yobs = new double[n];
 	for (i = 0; i < n; i++) {
@@ -793,7 +793,6 @@ List listFromArray(double *arr, int ncol, int length) {
     
     List lst;
     
-    NumericVector *v = new NumericVector[ncol];
     int n = length/ncol;
     for (int j = 0; j<ncol; j++) {
       NumericVector v = NumericVector(n);
@@ -804,6 +803,20 @@ List listFromArray(double *arr, int ncol, int length) {
     }
     
     return lst;
+}
+
+List listForSynData(double *syndata, int*synIndex, int m, int n) {
+    
+    List lst;
+    for (int j = 0; j < m; j++) {
+        NumericVector v = NumericVector(n);
+        for (int i = 0; i < n; i++) {
+            v[i] = (int)syndata[synIndex[j]*n+i];
+        }
+        lst.push_back(v);
+    }
+    return lst;
+    
 }
 
 
@@ -853,18 +866,37 @@ List getSynData(NumericVector vdata, int n, int seed, int niters, int burnin, in
         SampleLambdas(Lambdas + i * n, syndata + i * n , n, 1, in_upper, mt);
     }
     
-    return listFromArray(syndata,m,n*m);
+    double *CI = new double[n*2];
+    //caculate confidence interval
+    int lindex = ceil(L * 0.05);
+    int uindex = floor(L * 0.95);
+    for (i = 0; i < n; i++) {
+        vector<double> v;
+        for (j =0; j < L; j++) {
+            v.push_back(syndata[j*n+i]);
+        }
+        std::sort(v.begin(),v.end());
+        CI[i*2] = v[lindex];
+        CI[i*2+1] = v[uindex];
+    }
+    
+    double *riskmeasure = new double[n*(in_upper+1)];
+    double *risksummary = new double[m*(n+2)];
+    
+    
+    int *synIndex = new int[m];
+    for (int s= 0; s< m; s++) {
+        int index = (int)(mt.rand() * (double)L);
+        synIndex[s] = index;
+        ImportanceSampling(Lambdas, syndata + index*n, yobs, riskmeasure, L, 1, n, in_upper);
+        CalculateRiskSummary(new_data, n, riskmeasure, risksummary+s*(n+2), in_upper);
+    }
+    
+    List lst1 = listForSynData(syndata,synIndex,m,n);
+    List lst2 = listFromArray(CI,2,2*n);
+
+    lst1.push_back(lst2[0]);  lst1.push_back(lst2[1]);
+
+    return lst1;
     
 }
-
-
-//
-//// [[Rcpp::export]]
-//List getCI(int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int upperLimit) {
-//    
-//}
-//
-//// [[Rcpp::export]]
-//List getRiskSummary(int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int upperLimit){
-//    
-//}
