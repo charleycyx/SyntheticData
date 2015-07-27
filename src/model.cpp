@@ -819,6 +819,25 @@ List listForSynData(double *syndata, int*synIndex, int m, int n) {
     
 }
 
+List listFromRisk(double *risksummary, int n, int m) {
+
+    List lst;
+    for (int j = 0; j < m; j++) {
+        NumericVector v1 = NumericVector(n);
+        NumericVector v2 = NumericVector(n);
+        NumericVector v3 = NumericVector(n);
+        for (int i = 0; i < n; i++) {
+            v1[i] = (int)risksummary[j*(n+2)+i];
+            v2[i] = risksummary[j*(n+2)+ n];
+            v3[i] = risksummary[j*(n+2)+ n+1];
+        }
+        lst.push_back(v1);  lst.push_back(v2);  lst.push_back(v3);
+    }
+    return lst;
+    
+    
+}
+
 
 //START OF EXPORTING FUNCTIONS
 //EXPORTING FUNCTION links to Rcpp to provide R interface for all
@@ -894,8 +913,13 @@ List getSynData(NumericVector vdata, int n, int seed, int niters, int burnin, in
     
     List lst1 = listForSynData(syndata,synIndex,m,n);
     List lst2 = listFromArray(CI,2,2*n);
+    List lst3 = listFromRisk(risksummary, n, m);
 
+    //push list 2 and 3 into list 1 to form an entire list
     lst1.push_back(lst2[0]);  lst1.push_back(lst2[1]);
+    for (i=0; i<lst3.size(); i++) {
+        lst1.push_back(lst3[i]);
+    }
 
     return lst1;
     
