@@ -1,3 +1,19 @@
+#' Create Synthetic Dataset
+#'
+#' \code{getSyntheticData} returns a number of synthetic datasets using code proposed in "Synthesizing Truncated Count Data for Confidentiality,"
+#' and developed by Sam Hawala, Jerry Reiter and Quanli Wang.
+#' 
+#'@param df A dataframe
+#'@param upperLimit An integer: Defines "small count"
+#'@param numModel An integer: Number of synthetic datasets required as output
+#'@param burnin An integer: Number of burnins
+#'@param verbose Set = TRUE for output debug information
+#'@examples
+#' getSyntheticData(df)
+#' getSyntheticData(df, upperLimit = 10)
+#' 
+#' @return Dataframe containing the synthetic datasets
+
 getSyntheticData <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE, upperLimit=9) {
   vdata <- numeric()
   for (i in 1:length(df[[1]])) {
