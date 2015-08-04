@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // getSynData
 List getSynData(NumericVector vdata, int n, int seed, int niters, int burnin, int stride, int m, bool verbose, int in_upper);
-RcppExport SEXP SyntheticData_getSynData(SEXP vdataSEXP, SEXP nSEXP, SEXP seedSEXP, SEXP nitersSEXP, SEXP burninSEXP, SEXP strideSEXP, SEXP mSEXP, SEXP verboseSEXP, SEXP in_upperSEXP) {
+RcppExport SEXP Rmtcd_getSynData(SEXP vdataSEXP, SEXP nSEXP, SEXP seedSEXP, SEXP nitersSEXP, SEXP burninSEXP, SEXP strideSEXP, SEXP mSEXP, SEXP verboseSEXP, SEXP in_upperSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;

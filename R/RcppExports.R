@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 getSynData <- function(vdata, n, seed, niters, burnin, stride, m, verbose, in_upper) {
-    .Call('SyntheticData_getSynData', PACKAGE = 'SyntheticData', vdata, n, seed, niters, burnin, stride, m, verbose, in_upper)
+    .Call('Rmtcd_getSynData', PACKAGE = 'Rmtcd', vdata, n, seed, niters, burnin, stride, m, verbose, in_upper)
 }
 
