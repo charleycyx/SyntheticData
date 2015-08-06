@@ -38,3 +38,39 @@ getSyntheticData <- function(df, seed=0, niters=100000, burnin=30000, stride=500
   names(odf) <- c("source", "destination", "y", synNames, "CIlower","CIupper",riskNames)
   odf
 }
+
+mtcdForEntireDataFrame <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE) {
+  
+  upperLimit = max(df[[3]])
+  
+  getSyntheticData(df,seed,niters,burnin,stride,numModel,verbose,upperLimit)
+  
+}
+
+mtcdForSmallCount <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE, upperLimit=9) {
+  
+  dfs <- subset(df,df[[3]]<=upperLimit)
+  
+  dfsyn <- getSyntheticData(dfs,seed,niters,burnin,stride,numModel,verbose,upperLimit)
+  
+  dfcom <- subset(df,df[[3]]>upperLimit)
+  
+  #fill in all the synthetic data for not synthetic columns, using the original data
+  for (i in 1:numModel) {
+    dfcom <- cbind(dfcom,dfcom[[3]])
+  }
+  
+  #fill in all the rest of the columns with NA
+  for (i in 1:(length(dfsyn)-length(dfcom))) {
+    dfcom <- cbind(dfcom,rep(NA,length(dfcom[[1]])))
+  }
+  
+  #sync the names and rbind two data frame, this get us a data frame of the same size of the original one
+  names(dfcom) <- names(dfsyn)
+  dfsyn <- rbind(dfsyn,dfcom)
+  
+  #sync the names in df with the new df, so that we can merge for the original sequence
+  names(df) <- names(dfsyn)[1:length(df)]
+  
+  merge(df[,1:2],dfsyn,sort=FALSE,all.x=TRUE,by=names(dfsyn)[1:2])
+}

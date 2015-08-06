@@ -1,3 +1,3 @@
 useDynLib(Rmtcd)
-export(getSyntheticData)
+export(mtcdForSmallCount,mtcdForEntireDataFrame)
 importFrom(Rcpp, evalCpp)
