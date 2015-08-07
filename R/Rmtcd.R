@@ -1,6 +1,6 @@
-#' Generate Synthetic Dataset
+#' Synthesizing Truncated Count Data
 #' 
-#' This package provides an R wrapper function (\code{\link{getSyntheticData}}) for the statistical
+#' This package provides an R wrapper function ([link here]) for the statistical
 #' model proposed in "Synthesizing Truncated Count Data for Confidentiality," which was originally written
 #' in C++ and developed by Sam Hawala, Jerry Reiter and Quanli Wang.
 #' 
@@ -15,24 +15,32 @@
 #' generates synthetic data and computes several measures of disclosure risk, and was
 #' applied by the Census Bureau in synthesizing small county-to-county migration counts.
 #' 
-#' This package aims to make the experience more "user-friendly" by providing an R-interface.
+#' This package provides an R-interface for implementing the code.
 #' The original source C++ model is left unchanged aside from minor additions for R-compatibility. All inputs
-#' and outputs from the model are R objects, as described in the documentation for \code{\link{getSyntheticData}}.
+#' and outputs from the model are R objects, as described in the documentation for [link here].
 #' 
 #'  
 #' @section Functions:
-#' This package contains one function, \code{\link{getSyntheticData}}, an R-wrapper that utilizes
-#' the Rcpp package.
+#' This package contains x functions. [Description here]
 #' 
 #' @section Properties:
 #' \tabular{ll}{
-#' Package: \tab SyntheticData\cr
-#' License: \tab GPL (>=2)\cr
-#' Version: \tab 0.1
+#' Package: \tab Rmtcd\cr
+#' Version: \tab 0.1\cr
+#' Date: \tab [Put date here] \cr
+#' License: \tab This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc-sa/4.0/} or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.\cr
 #' }
 #' 
-#' @references \url{http://sites.duke.edu/tcrn/research-projects/downloadable-software/}
-#' @author John Doe \email{John@@doe.org}
+#' @references The original source code in C++ is available at \url{http://sites.duke.edu/tcrn/research-projects/downloadable-software/}
+#' 
+#' This package is maintained at [Github repo here]
+#' 
+#' Development was supported by the NSF Census Research Network grant #xxxx (\url{https://www.ncrn.cornell.edu/})
+#' 
+#' @author In order of contribution: Yuxin (Charley) Chen (\email{yc769@@cornell.edu}),
+#' Hautahi Kingi (\email{hrk55@@cornell.edu}),
+#' Alice Chou (\email{aec247@@cornell.edu}),
+#' Lars Vilhuber (\email{lars.vilhuber@@cornell.edu}). Please direct queries to the Labor Dynamics Institute (\email{ldi@@cornell.edu})
 #' @docType package
-#' @name SyntheticData
+#' @name Rmtcd
 NULL
