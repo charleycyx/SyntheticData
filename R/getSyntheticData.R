@@ -19,9 +19,9 @@ getSyntheticData <- function(df, seed=0, niters=100000, burnin=30000, stride=500
   }
   riskNames <- character(numModel*3)
   for (i in 0:(numModel-1)) {
-    riskNames[3*i+1] <- paste("dt",as.character(i),sep="")
-    riskNames[3*i+2] <- paste("Rall",as.character(i),sep="")
-    riskNames[3*i+3] <- paste("Runq",as.character(i),sep="")
+    riskNames[3*i+1] <- paste("dt",as.character(i+1),sep="")
+    riskNames[3*i+2] <- paste("Rall",as.character(i+1),sep="")
+    riskNames[3*i+3] <- paste("Runq",as.character(i+1),sep="")
   }
   
   names(odf) <- c("source", "destination", "y", synNames, "CIlower","CIupper",riskNames)
