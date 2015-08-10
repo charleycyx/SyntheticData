@@ -5,20 +5,20 @@
 #' by Sam Hawala, Jerry Reiter and Quanli Wang. References can be found in the package
 #' description.
 #' 
-#'@param df A dataframe with three columns, the last column containing count to be synthesized
-#'@param seed positive integer, random seed
+#'@param df A dataframe with three columns, the last column containing count to be synthesized, the first two must be numeric, numbers that uniquely identify counties
+#'@param seed positive integer for random number generation
 #'@param niters positive integer, number of iterations for parameter generation
-#'@param stride positive integer
+#'@param stride the model will save a model(set of parameters) for every stride number of models
 #'@param upperLimit a positive defining the "small count" threshold
 #'@param numModel a positive integer specifying the number of synthetic datasets to be generated
-#'@param burnin a positive integer specifying the number of burnins
+#'@param burnin a positive integer specifying the number of burnins(iterations of parameters will not be saved)
 #'@param verbose logical. Set = TRUE for output debug information
 #'
-#'@section Details: [Add model detail here]
+#'@section Details: The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets(note that for large counts, the synthetic data is just the original data). The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements. (for large counts, columns after the synthetic datasets do not exist)
 #'
 #'@examples
-#' getSyntheticData(df)
-#' getSyntheticData(df, upperLimit = 10)
+#' mtcdForSmallCount(df)
+#' mtcdForSmallCount(df, numModel = 5, upperLimit = 15)
 #' 
 #' @return A dataframe containing the synthetic datasets and disclosure risk measures
 

@@ -8,21 +8,19 @@ mtcdForEntireDataFrame(df, seed = 0, niters = 1e+05, burnin = 30000,
   stride = 500, numModel = 10, verbose = FALSE)
 }
 \arguments{
-\item{df}{A dataframe with three columns, the last column containing count to be synthesized}
+\item{df}{A dataframe with three columns, the last column containing count to be synthesized, the first two must be numeric, numbers that uniquely identify counties}
 
-\item{seed}{positive integer, random seed}
+\item{seed}{positive integer for random number generation}
 
 \item{niters}{positive integer, number of iterations for parameter generation}
 
-\item{burnin}{a positive integer specifying the number of burnins}
+\item{burnin}{a positive integer specifying the number of burnins(iterations of parameters will not be saved)}
 
-\item{stride}{positive integer}
+\item{stride}{the model will save a model(set of parameters) for every stride number of models}
 
 \item{numModel}{a positive integer specifying the number of synthetic datasets to be generated}
 
 \item{verbose}{logical. Set = TRUE for output debug information}
-
-\item{upperLimit}{a positive defining the "small count" threshold}
 }
 \value{
 A dataframe containing the synthetic datasets and disclosure risk measures
@@ -34,10 +32,10 @@ by Sam Hawala, Jerry Reiter and Quanli Wang. References can be found in the pack
 description.
 }
 \section{Details}{
- [Add model detail here]
+ The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets. The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements.
 }
 \examples{
-getSyntheticData(df)
-getSyntheticData(df, upperLimit = 10)
+mtcdForEntireDataFrame(df)
+mtcdForEntireDataFrame(df, numModel = 5)
 }
 

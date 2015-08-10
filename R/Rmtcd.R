@@ -21,7 +21,7 @@
 #' 
 #'  
 #' @section Functions:
-#' This package contains x functions. [Description here]
+#' This package contains two functions: mtcdForEntireDataFrame and mtcdForSmallCount. mtcdForEntireDataFrame takes in a data frame and generate synthetic data for each row in the data frame, while mtcdForSmallCount allows users to specify an upper limit that defines "small count", and only synthesize counts that are smaller than or equal to the specified number.
 #' 
 #' @section Properties:
 #' \tabular{ll}{
@@ -33,7 +33,7 @@
 #' 
 #' @references The original source code in C++ is available at \url{http://sites.duke.edu/tcrn/research-projects/downloadable-software/}
 #' 
-#' This package is maintained at [Github repo here]
+#' This package is maintained at \url{https://github.com/charleycyx/SyntheticData}
 #' 
 #' Development was supported by the NSF Census Research Network grant #xxxx (\url{https://www.ncrn.cornell.edu/})
 #' 
