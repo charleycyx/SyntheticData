@@ -17,8 +17,9 @@
 #'@section Details: The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets(note that for large counts, the synthetic data is just the original data). The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements. (for large counts, columns after the synthetic datasets do not exist)
 #'
 #'@examples
-#' mtcdForSmallCount(df)
-#' mtcdForSmallCount(df, numModel = 5, upperLimit = 15)
+#' read.table("data.txt") -> dataFrame
+#' mtcdForSmallCount(dataFrame)
+#' mtcdForSmallCount(dataFrame, numModel = 5, upperLimit = 15)
 #' 
 #' @return A dataframe containing the synthetic datasets and disclosure risk measures
 

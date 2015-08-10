@@ -35,7 +35,9 @@ description.
  The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets. The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements.
 }
 \examples{
-mtcdForEntireDataFrame(df)
-mtcdForEntireDataFrame(df, numModel = 5)
+setwd("00_pkg_src/Rmtcd/test")
+read.table("data.txt") -> dataFrame
+mtcdForEntireDataFrame(dataFrame)
+mtcdForEntireDataFrame(dataFrame, numModel = 5)
 }
 
