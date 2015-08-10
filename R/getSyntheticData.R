@@ -2,12 +2,7 @@ getSyntheticData <- function(df, seed=0, niters=100000, burnin=30000, stride=500
   
   # Create vector (vdata) by layering each row of the 3-col input dataframe alongside each other
   n <- length(df[[1]])
-  vdata <- numeric()				
-  for (i in 1:n) {
-    for (j in 1:3){
-      vdata <- c(vdata,df[[j]][i])
-    }
-  }
+  vdata <- c(t(df))			
 
   # Run the dataframe through the C++ model and append the results to the input dataframe
   odf <- data.frame(cbind(df,getSynData(vdata, n, seed, niters, burnin, stride, numModel, verbose, upperLimit-1)))
