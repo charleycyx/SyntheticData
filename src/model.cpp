@@ -463,8 +463,9 @@ double *ReadData(int n, int ncol, string infile, int verbose) {
 	int i,j;
 	ifstream theFile(infile.c_str());
 	if (theFile.fail()) {
-		std::cout << "Failed to open the file " << infile.c_str() << endl;
-		exit(1);
+// Hautahi: 2 lines below commented to remove CRAN package warning "Compiled code should not call entry points which might terminate R nor write to stdout/stderr instead of to the console, nor the system RNG."
+//		std::cout << "Failed to open the file " << infile.c_str() << endl;
+//		exit(1);
 	}
 	
 	double dCurrent = 0;
@@ -473,8 +474,9 @@ double *ReadData(int n, int ncol, string infile, int verbose) {
 			theFile >> dCurrent;
 			data[i] = dCurrent;
 		} else {
-			std::cout << "Not enough numbers to be read" << endl;
-			exit(1);
+// Hautahi: 2 lines below commented to remove CRAN package warning "Compiled code should not call entry points which might terminate R nor write to stdout/stderr instead of to the console, nor the system RNG."
+//			std::cout << "Not enough numbers to be read" << endl;
+//			exit(1);
 		}
 	}
 	theFile.close();
@@ -483,9 +485,10 @@ double *ReadData(int n, int ncol, string infile, int verbose) {
 	if (verbose) {
 		for (i = 0; i<n; i++){
 			for (j = 0; j < ncol; j++) {
-				fprintf(stdout,"%d ",(int)data[i*ncol+j]);
+// Hautahi: 2 lines below commented to remove CRAN package warning "Compiled code should not call entry points which might terminate R nor write to stdout/stderr instead of to the console, nor the system RNG."
+//				fprintf(stdout,"%d ",(int)data[i*ncol+j]);
 			}
-			fprintf(stdout,"\n");
+//			fprintf(stdout,"\n");
 		}
 	}	
 	return data;
