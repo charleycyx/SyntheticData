@@ -12,7 +12,6 @@
 #'@param upperLimit a positive defining the "small count" threshold
 #'@param numModel a positive integer specifying the number of synthetic datasets to be generated
 #'@param burnin a positive integer specifying the number of burnins(iterations of parameters will not be saved)
-#'@param verbose logical. Set = TRUE for output debug information
 #'
 #'@section Details: The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets(note that for large counts, the synthetic data is just the original data). The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements. (for large counts, columns after the synthetic datasets do not exist)
 #'
@@ -26,11 +25,11 @@
 # 1. Function definition: mtcdForSmallCount
 # -----------------------------------------------------
 
-mtcdForSmallCount <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE, upperLimit=9) {
+mtcdForSmallCount <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, upperLimit=9) {
   
   # Create synthetic data for small counts
   dfs <- subset(df,df[[3]]<=upperLimit) 
-  dfsyn <- getSyntheticData(dfs,seed,niters,burnin,stride,numModel,verbose,upperLimit)
+  dfsyn <- getSyntheticData(dfs,seed,niters,burnin,stride,numModel,FALSE,upperLimit)
   
   # Extract large count data
   dfcom <- subset(df,df[[3]]>upperLimit)

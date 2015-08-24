@@ -22,7 +22,6 @@
 #'@param stride the model will save a model(set of parameters) for every stride number of models
 #'@param numModel a positive integer specifying the number of synthetic datasets to be generated
 #'@param burnin a positive integer specifying the number of burnins(iterations of parameters will not be saved)
-#'@param verbose logical. Set = TRUE for output debug information
 #'
 #'@section Details: The first three columns of output are the original dataset. The next numModel columns are the synthetic datasets. The next two colunms give the 95 percent confidence intevals estimated using all saved models. The following columns give the dt, Rall and Runq risk measurements.
 #'
@@ -37,10 +36,10 @@
 # 2. Function Code
 # -----------------------------------------------------
 
-mtcdForEntireDataFrame <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10, verbose=FALSE) {
+mtcdForEntireDataFrame <- function(df, seed=0, niters=100000, burnin=30000, stride=500, numModel=10) {
   
   upperLimit = max(df[[3]])
   
-  getSyntheticData(df,seed,niters,burnin,stride,numModel,verbose,upperLimit)
+  getSyntheticData(df,seed,niters,burnin,stride,numModel,FALSE,upperLimit)
   
 }

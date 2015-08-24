@@ -5,7 +5,7 @@
 \title{Create Synthetic Dataset}
 \usage{
 mtcdForEntireDataFrame(df, seed = 0, niters = 1e+05, burnin = 30000,
-  stride = 500, numModel = 10, verbose = FALSE)
+  stride = 500, numModel = 10)
 }
 \arguments{
 \item{df}{A dataframe with three columns, the last column containing count to be synthesized, the first two must be numeric, numbers that uniquely identify counties}
@@ -19,8 +19,6 @@ mtcdForEntireDataFrame(df, seed = 0, niters = 1e+05, burnin = 30000,
 \item{stride}{the model will save a model(set of parameters) for every stride number of models}
 
 \item{numModel}{a positive integer specifying the number of synthetic datasets to be generated}
-
-\item{verbose}{logical. Set = TRUE for output debug information}
 }
 \value{
 A dataframe containing the synthetic datasets and disclosure risk measures
