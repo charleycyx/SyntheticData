@@ -37,7 +37,7 @@ This package contains two functions: mtcdForEntireDataFrame and mtcdForSmallCoun
 \tabular{ll}{
 Package: \tab Rmtcd\cr
 Version: \tab 0.1\cr
-Date: \tab [Put date here] \cr
+Date: \tab Aug 24 2015 \cr
 License: \tab This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy of this license, visit \url{http://creativecommons.org/licenses/by-nc-sa/4.0/} or send a letter to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.\cr
 }
 }
