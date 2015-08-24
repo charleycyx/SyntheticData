@@ -18,7 +18,6 @@
 #'
 #'@examples
 #' read.table("data.txt") -> dataFrame
-#' mtcdForSmallCount(dataFrame)
 #' mtcdForSmallCount(dataFrame, numModel = 5, upperLimit = 15)
 #' 
 #' @return A dataframe containing the synthetic datasets and disclosure risk measures

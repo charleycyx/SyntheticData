@@ -38,7 +38,6 @@ description.
 }
 \examples{
 read.table("data.txt") -> dataFrame
-mtcdForSmallCount(dataFrame)
 mtcdForSmallCount(dataFrame, numModel = 5, upperLimit = 15)
 }
 
